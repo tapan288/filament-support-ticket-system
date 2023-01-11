@@ -4,8 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Category;
-use Illuminate\Support\Str;
+use App\Models\Label;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
@@ -14,13 +13,13 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\CheckboxColumn;
-use App\Filament\Resources\CategoryResource\Pages;
+use App\Filament\Resources\LabelResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\LabelResource\RelationManagers;
 
-class CategoryResource extends Resource
+class LabelResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Label::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -29,14 +28,8 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->required()
-                    ->reactive()
-                    ->afterStateUpdated(function ($state, $set) {
-                        $set('slug', Str::slug($state));
-                    }),
-
-                TextInput::make('slug')
                     ->required(),
+
                 Checkbox::make('is_active'),
             ]);
     }
@@ -70,9 +63,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListLabels::route('/'),
+            'create' => Pages\CreateLabel::route('/create'),
+            'edit' => Pages\EditLabel::route('/{record}/edit'),
         ];
     }
 }
