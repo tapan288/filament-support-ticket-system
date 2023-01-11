@@ -14,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextInputColumn;
 use App\Filament\Resources\TicketResource\Pages;
+use App\Filament\Resources\TicketResource\RelationManagers\LabelsRelationManager;
 use App\Filament\Resources\TicketResource\RelationManagers\CategoriesRelationManager;
 
 class TicketResource extends Resource
@@ -68,6 +69,7 @@ class TicketResource extends Resource
     {
         return [
             CategoriesRelationManager::class,
+            LabelsRelationManager::class,
         ];
     }
 
