@@ -28,11 +28,15 @@ class TicketResource extends Resource
         return $form
             ->columns(1)
             ->schema([
-                TextInput::make('title'),
+                TextInput::make('title')
+                    ->required(),
                 Select::make('priority')
-                    ->options(self::$model::PRIORITY),
+                    ->options(self::$model::PRIORITY)
+                    ->required()
+                    ->in(self::$model::PRIORITY),
                 Select::make('assigned_to')
-                    ->relationship('assignedTo', 'name'),
+                    ->relationship('assignedTo', 'name')
+                    ->required(),
                 Textarea::make('description'),
                 Textarea::make('comment'),
 
@@ -44,7 +48,7 @@ class TicketResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
-                    ->description(fn (Ticket $record): string => $record->description),
+                    ->description(fn (Ticket $record): string => $record?->description ?? ''),
                 BadgeColumn::make('status')
                     ->enum(self::$model::STATUS),
                 BadgeColumn::make('status')
