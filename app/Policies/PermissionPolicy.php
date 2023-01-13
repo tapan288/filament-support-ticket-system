@@ -92,7 +92,7 @@ class PermissionPolicy
         //
     }
 
-    public function deleteAny(User $user, Permission $permission)
+    public function deleteAny(User $user)
     {
         return $user->hasPermission('permission_delete');
     }
