@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Ticket;
 use Filament\Resources\Form;
@@ -12,10 +13,12 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextInputColumn;
 use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers\LabelsRelationManager;
 use App\Filament\Resources\TicketResource\RelationManagers\CategoriesRelationManager;
+use App\Models\Role;
 
 class TicketResource extends Resource
 {
@@ -35,7 +38,14 @@ class TicketResource extends Resource
                     ->required()
                     ->in(self::$model::PRIORITY),
                 Select::make('assigned_to')
-                    ->relationship('assignedTo', 'name')
+                    ->options(
+                        User::whereHas('roles', function (Builder $query) {
+                            $query->where('name', Role::ROLES['Agent']);
+                        })
+                            ->get()
+                            ->pluck('name', 'id')
+                            ->toArray()
+                    )
                     ->required(),
                 Textarea::make('description'),
                 Textarea::make('comment'),
