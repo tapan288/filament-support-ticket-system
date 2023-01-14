@@ -27,6 +27,16 @@ class TicketResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'created_at';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'desc';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -59,14 +69,20 @@ class TicketResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->sortable()
                     ->description(fn (Ticket $record): string => $record?->description ?? ''),
                 BadgeColumn::make('status')
+                    ->sortable()
                     ->enum(self::$model::STATUS),
                 BadgeColumn::make('priority')
+                    ->sortable()
                     ->enum(self::$model::PRIORITY),
                 TextColumn::make('assignedTo.name'),
                 TextColumn::make('assignedBy.name'),
                 TextInputColumn::make('comment'),
+                TextColumn::make('created_at')
+                    ->sortable()
+                    ->dateTime(),
             ])
             ->filters([
                 SelectFilter::make('status')
