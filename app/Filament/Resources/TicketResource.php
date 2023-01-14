@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Role;
 use App\Models\User;
 use Filament\Tables;
 use App\Models\Ticket;
@@ -13,12 +14,12 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextInputColumn;
 use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers\LabelsRelationManager;
 use App\Filament\Resources\TicketResource\RelationManagers\CategoriesRelationManager;
-use App\Models\Role;
 
 class TicketResource extends Resource
 {
@@ -61,14 +62,17 @@ class TicketResource extends Resource
                     ->description(fn (Ticket $record): string => $record?->description ?? ''),
                 BadgeColumn::make('status')
                     ->enum(self::$model::STATUS),
-                BadgeColumn::make('status')
+                BadgeColumn::make('priority')
                     ->enum(self::$model::PRIORITY),
                 TextColumn::make('assignedTo.name'),
                 TextColumn::make('assignedBy.name'),
                 TextInputColumn::make('comment'),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options(self::$model::STATUS),
+                SelectFilter::make('priority')
+                    ->options(self::$model::PRIORITY)
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
