@@ -36,7 +36,8 @@ class LabelsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->recordSelectOptionsQuery(fn (Builder $query) => $query->active()),
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),

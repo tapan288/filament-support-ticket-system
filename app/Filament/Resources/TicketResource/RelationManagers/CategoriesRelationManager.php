@@ -6,6 +6,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Filament\Tables\Actions\AttachAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -36,7 +37,8 @@ class CategoriesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make(),
+                AttachAction::make()
+                    ->recordSelectOptionsQuery(fn (Builder $query) => $query->active())
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),
