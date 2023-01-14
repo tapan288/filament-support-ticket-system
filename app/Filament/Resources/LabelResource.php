@@ -8,9 +8,11 @@ use App\Models\Label;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Checkbox;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\CheckboxColumn;
 use App\Filament\Resources\LabelResource\Pages;
@@ -30,7 +32,7 @@ class LabelResource extends Resource
                 TextInput::make('name')
                     ->required(),
 
-                Checkbox::make('is_active'),
+                Toggle::make('is_active'),
             ]);
     }
 
@@ -39,7 +41,7 @@ class LabelResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
-                CheckboxColumn::make('is_active')
+                ToggleColumn::make('is_active')
                     ->disabled(!auth()->user()->hasPermission('category_edit'))
             ])
             ->filters([
