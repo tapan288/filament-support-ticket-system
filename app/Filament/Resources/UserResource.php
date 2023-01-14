@@ -28,6 +28,9 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name'),
                 TextInput::make('email')->type('email'),
+                TextInput::make('password')
+                    ->password()
+                    ->disableAutocomplete(),
             ]);
     }
 
