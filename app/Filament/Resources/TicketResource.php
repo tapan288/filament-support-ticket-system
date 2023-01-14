@@ -73,9 +73,19 @@ class TicketResource extends Resource
                     ->description(fn (Ticket $record): string => $record?->description ?? ''),
                 BadgeColumn::make('status')
                     ->sortable()
+                    ->colors([
+                        'warning' => self::$model::STATUS['Archived'],
+                        'success' => self::$model::STATUS['Closed'],
+                        'danger' => self::$model::STATUS['Open'],
+                    ])
                     ->enum(self::$model::STATUS),
                 BadgeColumn::make('priority')
                     ->sortable()
+                    ->colors([
+                        'warning' => self::$model::PRIORITY['Medium'],
+                        'success' => self::$model::PRIORITY['Low'],
+                        'danger' => self::$model::PRIORITY['High'],
+                    ])
                     ->enum(self::$model::PRIORITY),
                 TextColumn::make('assignedTo.name'),
                 TextColumn::make('assignedBy.name'),
