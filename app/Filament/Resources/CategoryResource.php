@@ -17,6 +17,7 @@ use Filament\Tables\Columns\CheckboxColumn;
 use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\Pages\ManageCategories;
 
 class CategoryResource extends Resource
 {
@@ -71,9 +72,7 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => ManageCategories::route('/'),
         ];
     }
 }
