@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\TicketResource\Pages;
 
-use App\Filament\Resources\TicketResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\TicketResource;
+use App\Models\Role;
 
 class ListTickets extends ListRecords
 {
@@ -15,5 +17,10 @@ class ListTickets extends ListRecords
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    protected function getTableQuery(): Builder
+    {
+        return auth()->user()->hasRole(Role::ROLES['Admin']) ?  parent::getTableQuery() : parent::getTableQuery()->where('assigned_to', auth()->id());
     }
 }
