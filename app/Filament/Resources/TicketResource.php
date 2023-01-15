@@ -14,6 +14,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextInputColumn;
@@ -71,14 +72,11 @@ class TicketResource extends Resource
                 TextColumn::make('title')
                     ->sortable()
                     ->description(fn (Ticket $record): string => $record?->description ?? ''),
-                BadgeColumn::make('status')
+                SelectColumn::make('status')
+                    ->disabled(!auth()->user()->hasPermission('ticket_edit'))
+                    ->disablePlaceholderSelection()
                     ->sortable()
-                    ->colors([
-                        'warning' => self::$model::STATUS['Archived'],
-                        'success' => self::$model::STATUS['Closed'],
-                        'danger' => self::$model::STATUS['Open'],
-                    ])
-                    ->enum(self::$model::STATUS),
+                    ->options(self::$model::STATUS),
                 BadgeColumn::make('priority')
                     ->sortable()
                     ->colors([
@@ -89,7 +87,8 @@ class TicketResource extends Resource
                     ->enum(self::$model::PRIORITY),
                 TextColumn::make('assignedTo.name'),
                 TextColumn::make('assignedBy.name'),
-                TextInputColumn::make('comment'),
+                TextInputColumn::make('comment')
+                    ->disabled(!auth()->user()->hasPermission('ticket_edit')),
                 TextColumn::make('created_at')
                     ->sortable()
                     ->dateTime(),
