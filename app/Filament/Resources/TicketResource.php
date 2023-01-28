@@ -100,6 +100,7 @@ class TicketResource extends Resource
                     ->options(self::$model::PRIORITY)
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -122,6 +123,7 @@ class TicketResource extends Resource
             'index' => Pages\ListTickets::route('/'),
             'create' => Pages\CreateTicket::route('/create'),
             'edit' => Pages\EditTicket::route('/{record}/edit'),
+            'view' => Pages\ViewTicket::route('/{record}'),
         ];
     }
 }
