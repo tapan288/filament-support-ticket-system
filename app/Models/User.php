@@ -23,8 +23,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $with = ['roles.permissions'];
-
     /**
      * The attributes that should be hidden for serialization.
      *
