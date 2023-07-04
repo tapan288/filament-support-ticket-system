@@ -30,6 +30,7 @@ class UserResource extends Resource
                 TextInput::make('email')->type('email'),
                 TextInput::make('password')
                     ->password()
+                    ->hiddenOn(['edit'])
                     ->disableAutocomplete(),
             ]);
     }

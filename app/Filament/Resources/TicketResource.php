@@ -52,7 +52,7 @@ class TicketResource extends Resource
                 Select::make('assigned_to')
                     ->options(
                         User::whereHas('roles', function (Builder $query) {
-                            $query->where('name', Role::ROLES['Agent']);
+                            $query->where('title', Role::ROLES['Agent']);
                         })
                             ->get()
                             ->pluck('name', 'id')
