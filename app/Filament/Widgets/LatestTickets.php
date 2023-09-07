@@ -15,7 +15,7 @@ class LatestTickets extends BaseWidget
 {
     protected static ?int $sort = 2;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getTableQuery(): Builder
     {
@@ -29,23 +29,23 @@ class LatestTickets extends BaseWidget
         return [
             TextColumn::make('title')
                 ->sortable()
-                ->description(fn (Ticket $record): string => $record?->description ?? ''),
-            BadgeColumn::make('status')
+                ->description(fn(Ticket $record): string => $record?->description ?? ''),
+            TextColumn::make('status')
                 ->sortable()
                 ->colors([
                     'warning' => Ticket::STATUS['Archived'],
                     'success' => Ticket::STATUS['Closed'],
                     'danger' => Ticket::STATUS['Open'],
                 ])
-                ->enum(Ticket::STATUS),
-            BadgeColumn::make('priority')
+                ->badge(),
+            TextColumn::make('priority')
                 ->sortable()
                 ->colors([
                     'warning' => Ticket::PRIORITY['Medium'],
                     'success' => Ticket::PRIORITY['Low'],
                     'danger' => Ticket::PRIORITY['High'],
                 ])
-                ->enum(Ticket::PRIORITY),
+                ->badge(),
             TextColumn::make('assignedTo.name'),
             TextColumn::make('assignedBy.name'),
             TextInputColumn::make('comment'),

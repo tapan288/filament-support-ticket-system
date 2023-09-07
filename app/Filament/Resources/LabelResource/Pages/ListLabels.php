@@ -10,7 +10,7 @@ class ListLabels extends ListRecords
 {
     protected static string $resource = LabelResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make(),

@@ -6,8 +6,8 @@ use Filament\Forms;
 use Filament\Tables;
 use App\Models\Category;
 use Illuminate\Support\Str;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Checkbox;
@@ -25,7 +25,7 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-filter';
+    protected static ?string $navigationIcon = 'heroicon-o-funnel';
 
     public static function form(Form $form): Form
     {
