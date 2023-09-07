@@ -8,10 +8,15 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use App\Services\TextMessageService;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -55,6 +60,27 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
+                BulkAction::make('send_message')
+                    ->form([
+                        Textarea::make('message')
+                            ->placeholder('Enter your Message')
+                            ->rows(5)
+                            ->required(),
+                        Textarea::make('remarks')
+                            ->placeholder('Enter remarks if any.')
+                            ->rows(2),
+                    ])
+                    ->action(function (array $data, Collection $records) {
+                        TextMessageService::sendMessage($records, $data);
+
+                        Notification::make()
+                            ->title('Messages Sent Successfully')
+                            ->success()
+                            ->send();
+                    })
+                    ->icon('heroicon-o-chat-bubble-left-ellipsis')
+                    ->modalButton('Send Message')
+                    ->deselectRecordsAfterCompletion(),
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
