@@ -33,7 +33,7 @@ class CategoryResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->required()
-                    ->reactive()
+                    ->live(onBlur: true)
                     ->afterStateUpdated(function ($state, $set) {
                         $set('slug', Str::slug($state));
                     }),

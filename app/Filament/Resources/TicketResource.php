@@ -71,20 +71,20 @@ class TicketResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->sortable()
-                    ->description(fn (Ticket $record): string => $record?->description ?? ''),
+                    ->description(fn(Ticket $record): string => $record?->description ?? ''),
                 SelectColumn::make('status')
                     ->disabled(!auth()->user()->hasPermission('ticket_edit'))
                     ->disablePlaceholderSelection()
                     ->sortable()
                     ->options(self::$model::STATUS),
-                BadgeColumn::make('priority')
+                TextColumn::make('priority')
+                    ->badge()
                     ->sortable()
                     ->colors([
                         'warning' => self::$model::PRIORITY['Medium'],
                         'success' => self::$model::PRIORITY['Low'],
                         'danger' => self::$model::PRIORITY['High'],
-                    ])
-                    ->enum(self::$model::PRIORITY),
+                    ]),
                 TextColumn::make('assignedTo.name'),
                 TextColumn::make('assignedBy.name'),
                 TextInputColumn::make('comment')
