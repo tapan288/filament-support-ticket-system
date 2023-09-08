@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use Closure;
+use App\Models\Role;
 use Filament\Tables;
 use App\Models\Ticket;
 use Filament\Tables\Columns\TextColumn;
@@ -19,9 +20,12 @@ class LatestTickets extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Ticket::query()
+        return auth()->user()->hasRole(Role::ROLES['Admin']) ? Ticket::query()
             ->latest()
-            ->limit(5);
+            ->limit(5) : Ticket::query()
+                ->latest()
+                ->where('assigned_to', auth()->id())
+                ->limit(5);
     }
 
     protected function getTableColumns(): array
