@@ -14,6 +14,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -61,7 +63,7 @@ class TicketResource extends Resource
                     ->required(),
                 Textarea::make('description'),
                 Textarea::make('comment'),
-
+                FileUpload::make('attachment'),
             ]);
     }
 
@@ -89,6 +91,7 @@ class TicketResource extends Resource
                 TextColumn::make('assignedBy.name'),
                 TextInputColumn::make('comment')
                     ->disabled(!auth()->user()->hasPermission('ticket_edit')),
+                ImageColumn::make('attachment'),
                 TextColumn::make('created_at')
                     ->sortable()
                     ->dateTime(),
