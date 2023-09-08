@@ -11,6 +11,8 @@ class TicketsOverviewChart extends ChartWidget
 {
     protected static ?string $heading = 'Tickets Overview';
 
+    protected static ?int $sort = 2;
+
     public ?string $filter = 'week';
 
     protected static ?string $pollingInterval = null;
