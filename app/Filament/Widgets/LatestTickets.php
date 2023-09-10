@@ -2,12 +2,9 @@
 
 namespace App\Filament\Widgets;
 
-use Closure;
 use App\Models\Role;
-use Filament\Tables;
 use App\Models\Ticket;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextInputColumn;
 use Filament\Widgets\TableWidget as BaseWidget;
