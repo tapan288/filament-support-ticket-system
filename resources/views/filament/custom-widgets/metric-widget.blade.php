@@ -30,7 +30,7 @@
     ]) }}
     >
     <div class="grid gap-y-2">
-        <div class="flex items-center gap-x-2">
+        <div class="flex items-center justify-between gap-x-2">
             @if ($icon = $getIcon())
                 <x-filament::icon :icon="$icon"
                     class="fi-wi-stats-overview-stat-icon h-5 w-5 text-gray-400 dark:text-gray-500" />
@@ -39,6 +39,18 @@
             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
                 {{ $getLabel() }}
             </span>
+
+            @if ($filters = $this->getFilters())
+                <x-filament::input.wrapper>
+                    <x-filament::input.select wire:model.live="filter">
+                        @foreach ($filters as $value => $label)
+                            <option value="{{ $value }}">
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </x-filament::input.select>
+                </x-filament::input.wrapper>
+            @endif
         </div>
 
         <div class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white">

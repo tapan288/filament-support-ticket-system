@@ -10,6 +10,8 @@ use Illuminate\View\ComponentAttributeBag;
 
 class MetricWidget extends Widget
 {
+    public ?string $filter = null;
+
     protected string|array|null $color = null;
 
     protected ?string $icon = null;
@@ -179,6 +181,16 @@ class MetricWidget extends Widget
      * @return scalar | Htmlable | Closure
      */
     public function getValue()
+    {
+        return null;
+    }
+
+    public function updatedFilter($value): void
+    {
+        $this->getValue();
+    }
+
+    protected function getFilters(): ?array
     {
         return null;
     }
