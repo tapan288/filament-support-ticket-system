@@ -1,7 +1,8 @@
 <?php
 
-namespace Filament\Widgets;
+namespace App\Filament\CustomWidgets;
 
+use Filament\Widgets\Widget;
 use Filament\Widgets\Concerns\CanPoll;
 use App\Filament\CustomWidgets\MetricWidget;
 

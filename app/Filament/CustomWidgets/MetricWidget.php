@@ -104,13 +104,6 @@ class MetricWidget extends Widget
         return $this;
     }
 
-    public function id(string $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
     public function getColor(): string|array|null
     {
         return $this->color;
@@ -194,4 +187,6 @@ class MetricWidget extends Widget
     {
         return null;
     }
+
+    protected static string $view = 'filament.custom-widgets.metric-widget';
 }

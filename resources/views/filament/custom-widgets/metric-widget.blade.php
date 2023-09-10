@@ -1,10 +1,10 @@
 @php
     use Filament\Support\Enums\IconPosition;
     
-    $descriptionColor = $getDescriptionColor() ?? 'gray';
-    $descriptionIcon = $getDescriptionIcon();
-    $descriptionIconPosition = $getDescriptionIconPosition();
-    $url = $getUrl();
+    $descriptionColor = $this->getDescriptionColor() ?? 'gray';
+    $descriptionIcon = $this->getDescriptionIcon();
+    $descriptionIconPosition = $this->getDescriptionIconPosition();
+    $url = $this->getUrl();
     $tag = $url ? 'a' : 'div';
     
     $descriptionIconClasses = \Illuminate\Support\Arr::toCssClasses([
@@ -22,22 +22,22 @@
 
 <{!! $tag !!}
     @if ($url) href="{{ $url }}"
-        @if ($shouldOpenUrlInNewTab())
+        @if ($this->shouldOpenUrlInNewTab())
             target="_blank" @endif
     @endif
-    {{ $getExtraAttributeBag()->class([
+    {{ $this->getExtraAttributeBag()->class([
         'fi-wi-stats-overview-stat relative rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10',
     ]) }}
     >
     <div class="grid gap-y-2">
         <div class="flex items-center justify-between gap-x-2">
-            @if ($icon = $getIcon())
+            @if ($icon = $this->getIcon())
                 <x-filament::icon :icon="$icon"
                     class="fi-wi-stats-overview-stat-icon h-5 w-5 text-gray-400 dark:text-gray-500" />
             @endif
 
             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {{ $getLabel() }}
+                {{ $this->getLabel() }}
             </span>
 
             @if ($filters = $this->getFilters())
@@ -54,10 +54,10 @@
         </div>
 
         <div class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white">
-            {{ $getValue() }}
+            {{ $this->getValue() }}
         </div>
 
-        @if ($description = $getDescription())
+        @if ($description = $this->getDescription())
             <div class="flex items-center gap-x-1">
                 @if ($descriptionIcon && in_array($descriptionIconPosition, [IconPosition::Before, 'before']))
                     <x-filament::icon :icon="$descriptionIcon" :class="$descriptionIconClasses" :style="$descriptionIconStyles" />
