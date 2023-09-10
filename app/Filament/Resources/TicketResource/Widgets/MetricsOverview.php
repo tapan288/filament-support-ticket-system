@@ -12,6 +12,7 @@ class MetricsOverview extends MetricsOverviewWidget
     {
         return [
             SampleMetricWidget::class,
+            // AnotherMetricWidget::class,
         ];
     }
 }
