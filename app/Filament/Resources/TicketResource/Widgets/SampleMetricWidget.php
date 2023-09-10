@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TicketResource\Widgets;
 
+use App\Models\Ticket;
 use Illuminate\Contracts\Support\Htmlable;
 use App\Filament\CustomWidgets\MetricWidget;
 
@@ -9,9 +10,9 @@ class SampleMetricWidget extends MetricWidget
 {
     public ?string $filter = 'today';
 
-    protected string|Htmlable|null $description = "20k increase";
+    // protected string|Htmlable|null $description = "20k increase";
 
-    protected ?string $descriptionIcon = "heroicon-o-arrow-up";
+    // protected ?string $descriptionIcon = "heroicon-o-arrow-up";
 
     // protected array $extraAttributes = [
     //     'class' => 'cursor-pointer',
@@ -33,6 +34,11 @@ class SampleMetricWidget extends MetricWidget
 
     public function getValue()
     {
-        return "some value";
+        return match ($this->filter) {
+            'today' => Ticket::whereDate('created_at', today())->count(),
+            'week' => Ticket::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+            'month' => Ticket::whereMonth('created_at', now()->month)->count(),
+            'year' => Ticket::whereYear('created_at', now()->year)->count(),
+        };
     }
 }
