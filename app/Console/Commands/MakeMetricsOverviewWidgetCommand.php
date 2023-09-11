@@ -10,18 +10,18 @@ use Filament\Resources\Resource;
 use Filament\Support\Commands\Concerns\CanValidateInput;
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
 
-class MakeMetricWidgetCommand extends Command
+class MakeMetricsOverviewWidgetCommand extends Command
 {
     use CanManipulateFiles;
     use CanValidateInput;
 
-    protected $description = 'Create a new Filament Metric widget class';
+    protected $description = 'Create a new Filament Metric Overview Widget class';
 
-    protected $signature = 'make:metric-widget {name?} {--R|resource=} {--panel=} {--F|force}';
+    protected $signature = 'make:metric-overview-widget {name?} {--R|resource=} {--panel=} {--F|force}';
 
     public function handle(): int
     {
-        $widget = (string) str($this->argument('name') ?? $this->askRequired('Name (e.g. `BlogPostsMetricWidget`)', 'name'))
+        $widget = (string) str($this->argument('name') ?? $this->askRequired('Name (e.g. `BlogPostsMetricOverviewWidget`)', 'name'))
             ->trim('/')
             ->trim('\\')
             ->trim(' ')
@@ -131,14 +131,16 @@ class MakeMetricWidgetCommand extends Command
             return static::INVALID;
         }
 
-        $this->copyStubToApp('MetricWidget', $path, [
+        $this->copyStubToApp('MetricsOverviewWidget', $path, [
             'class' => $widgetClass,
             'namespace' => filled($resource) ? "{$resourceNamespace}\\{$resource}\\Widgets" . ($widgetNamespace !== '' ? "\\{$widgetNamespace}" : '') : $namespace . ($widgetNamespace !== '' ? "\\{$widgetNamespace}" : ''),
         ]);
 
         $this->components->info("Successfully created {$widget}!");
 
-        $this->components->info("Make sure to register the widget in `getMetrics()` method in the MetricsOverviewWidget.");
+        if ($resource !== null) {
+            $this->components->info("Make sure to register the widget in `{$resourceClass}::getWidgets()`, and then again in `getHeaderWidgets()` or `getFooterWidgets()` of any `{$resourceClass}` page.");
+        }
 
         return static::SUCCESS;
     }
