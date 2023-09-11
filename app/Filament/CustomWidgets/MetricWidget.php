@@ -173,7 +173,7 @@ class MetricWidget extends Widget
     /**
      * @return scalar | Htmlable | Closure
      */
-    public function getValue()
+    public function getValue(): ?string
     {
         return null;
     }

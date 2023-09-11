@@ -32,7 +32,7 @@ class SampleMetricWidget extends MetricWidget
         ];
     }
 
-    public function getValue()
+    public function getValue(): ?string
     {
         return match ($this->filter) {
             'today' => Ticket::whereDate('created_at', today())->count(),
